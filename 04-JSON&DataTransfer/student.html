@@ -11,7 +11,23 @@
 		<p id="personalData"></p>
 
 		<script>
-
+		const button = document.getElementsByTagName('input').item(0);
+			button.onclick = () =>{
+			const method = "GET";
+			const URL ="/bai-master/04-JSON&DataTransfer/tomaszwalas.json";
+			const xht = new XMLHttpRequest();
+			xht.responseType = 'json';
+			xht.onreadystatechange = function () {
+					if(this.status === 200 && this.readyState === 4) {
+						console.log(this.response.firstName);
+						console.log(this.response.lastName);
+						const personalDataElement =document.getElementById('personalData');
+						personalDataElement.innerHTML = `First Name: ${this.response.firstName} <br> LastName: ${this.response.lastName}`;
+					}
+				}
+			xht.open(method, URL)
+				xht.send()
+			}
 		</script>
 
 	</body>

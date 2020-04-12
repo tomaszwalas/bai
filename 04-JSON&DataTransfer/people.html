@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>People</title>
+    <meta charset="UTF-8">
+    <script src='https://code.jquery.com/jquery-3.3.1.js'></script>
+</head>
+<body>
+<h1>People</h1>
+<input type="button" value="Display people">
+
+<table>
+    <thead>
+    <th>Number</th>
+    <th>Name</th>
+    <th>Surname</th>
+    <th>Country</th>
+    <th>Email</th>
+    </thead>
+    <tbody id="tableBody">
+
+    </tbody>
+</table>
+
+<script>
+const button = document.getElementsByTagName('input').item(0);
+			button.onclick = () =>{
+   
+        const method = 'GET';
+        const URL = '/bai-master/04-JSON&DataTransfer/people.json';
+        const xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (this.status === 200 && this.readyState === 4) {
+                const tableBody = document.getElementById('tableBody');
+                const response = JSON.parse(this.response)
+                for (let i = 0; i < response.length; i++) {
+                    const row = document.createElement('tr');
+                    const idColumn = document.createElement('td');
+                    const nameColumn = document.createElement('td');
+                    const surnameColumn = document.createElement('td');
+                    const countryColumn = document.createElement('td');
+                    const emailColumn = document.createElement('td');
+
+                    const {name, surname, country, email} = response[i]
+                    idColumn.innerHTML = i;
+                    nameColumn.innerHTML = name
+                    surnameColumn.innerHTML = surname.toUpperCase()
+                    countryColumn.innerHTML = country
+                    emailColumn.innerHTML = email
+
+                    row.appendChild(idColumn)
+                    row.appendChild(nameColumn)
+                    row.appendChild(surnameColumn)
+                    row.appendChild(countryColumn)
+                    row.appendChild(emailColumn)
+
+                    tableBody.appendChild(row);
+                }
+                $('#datatable').DataTable();
+            }
+        };
+        xhr.open(method, URL);
+        xhr.send();
+    };
+</script>
+
+</body>
+</html>
